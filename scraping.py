@@ -1,12 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = 'https://www.betclic.pl/pilka-nozna-sfootball/premier-league-c3'
 
 def get_response(url):
     return requests.get(url)
 
-def get_soup() -> BeautifulSoup:
+def get_soup(url) -> BeautifulSoup:
     return BeautifulSoup(get_response(url).text, "html.parser")
 
 #return dict with dates (strings) as keys, and list of match spacebars (QueryResults) as values
