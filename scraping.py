@@ -1,11 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 
-
-def get_response(url):
+#gets url from a file (must be only one url in a file)
+def get_url(filename : str) -> str:
+    with open(filename, 'r', encoding='utf-8') as f:
+        return f.read()
+        
+def get_response(url : str):
     return requests.get(url)
 
-def get_soup(url) -> BeautifulSoup:
+def get_soup(url : str) -> BeautifulSoup:
     return BeautifulSoup(get_response(url).text, "html.parser")
 
 #return dict with dates (strings) as keys, and list of match spacebars (QueryResults) as values
