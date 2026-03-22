@@ -13,7 +13,7 @@ class Scraping:
         self.url = self.get_url(filename)
         self.soup = self.get_soup(self.url)
         self.matches_dict = self.create_matches_dict(self.soup)
-        self.print_matches(self.matches_dict)
+        #self.print_matches()
 
     #gets url from a file (must be only one url in a file)
     @staticmethod
@@ -44,10 +44,17 @@ class Scraping:
 
         return datetime.strptime(raw_date, mask)
 
-    def get_match_on_team_name(team_name : str):               #TODO problem when one team has more than one match on the page
-        pass
+    def get_match_from_team_name(self, team_name : str):               #TODO problem when one team has more than one match on the page
+        data = self.matches_dict
+        for i in range(len(data)):
+            for j in list(data.values())[i]:
+                if team_name in j.text:
+                    print(j.text)
+                    return j
 
-    def print_matches(self, data : dict):
+
+    def print_matches(self):
+        data = self.matches_dict
         for i in range(len(data)):
             print(list(data.keys())[i])
             for j in list(data.values())[i]:
@@ -55,3 +62,5 @@ class Scraping:
 
 
 sc = Scraping('urls.txt')
+
+sc.get_match_from_team_name("ord")
