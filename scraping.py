@@ -31,10 +31,13 @@ class Scraping:
     @staticmethod
     def create_matches_dict(soup : BeautifulSoup) -> dict : 
         cardEvents = soup.find_all(class_='groupEvents')
-        score_wrappers = [event.find_all(class_='scoreboard_wrapper') for event in cardEvents]
+        #score_wrappers = [event.find_all(class_='scoreboard_wrapper') for event in cardEvents]
+        match_event = [event.find_all(class_='cardEvent_content') for event in cardEvents]
         dates=[event.find(class_='groupEvents_headTitle').text for event in cardEvents]
 
-        return dict(zip(dates, score_wrappers))
+        return dict(zip(dates, match_event))
+    
+
 
 
     def get_date(data_str : str) -> datetime:       #data_str format 'xxx day/month'
@@ -63,4 +66,3 @@ class Scraping:
 
 sc = Scraping('urls.txt')
 
-sc.get_match_from_team_name("ord")
