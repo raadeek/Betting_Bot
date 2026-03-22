@@ -4,42 +4,54 @@ from bs4 import BeautifulSoup
 
 YEAR='2026'
 
-#gets url from a file (must be only one url in a file)
-def get_url(filename : str) -> str:
-    with open(filename, 'r', encoding='utf-8') as f:
-        return f.read()
-        
+'''
+Scraping gets data from website
+'''
 
-def get_soup(url : str) -> BeautifulSoup:
-    response = requests.get(url)
-    return BeautifulSoup(response.text, "html.parser")
+class Scraping:
+    def __init__(self, filename):
+        self.url = self.get_url(filename)
+        self.soup = self.get_soup(self.url)
+        self.matches_dict = self.create_matches_dict(self.soup)
+        self.print_matches(self.matches_dict)
 
-
-#return dict with dates (strings) as keys, and list of match spacebars (list[QueryResults]) as values
-def create_matches_dict(soup : BeautifulSoup) -> dict : 
-    cardEvents = soup.find_all(class_='groupEvents')
-    score_wrappers = [event.find_all(class_='scoreboard_wrapper') for event in cardEvents]
-    dates=[event.find(class_='groupEvents_headTitle').text for event in cardEvents]
-
-    return dict(zip(dates, score_wrappers))
-
-
-def get_date(data_str : str) -> datetime:       #data_str format 'xxx day/month'
-    date = data_str.split()
-    raw_date = date[1] + f'/{YEAR}'
-    mask = "%d/%m/%Y"
-
-    return datetime.strptime(raw_date, mask)
+    #gets url from a file (must be only one url in a file)
+    @staticmethod
+    def get_url(filename : str) -> str:
+        with open(filename, 'r', encoding='utf-8') as f:
+            return f.read()
+            
+    @staticmethod
+    def get_soup(url : str) -> BeautifulSoup:
+        response = requests.get(url)
+        return BeautifulSoup(response.text, "html.parser")
 
 
-def print_matches(data : dict):
-    for i in range(len(data)):
-        print(list(data.keys())[i])
-        for j in list(data.values())[i]:
-            print(f"      {j.text}")
+    #return dict with dates (strings) as keys, and list of match spacebars (list[QueryResults]) as values
+    @staticmethod
+    def create_matches_dict(soup : BeautifulSoup) -> dict : 
+        cardEvents = soup.find_all(class_='groupEvents')
+        score_wrappers = [event.find_all(class_='scoreboard_wrapper') for event in cardEvents]
+        dates=[event.find(class_='groupEvents_headTitle').text for event in cardEvents]
+
+        return dict(zip(dates, score_wrappers))
 
 
+    def get_date(data_str : str) -> datetime:       #data_str format 'xxx day/month'
+        date = data_str.split()
+        raw_date = date[1] + f'/{YEAR}'
+        mask = "%d/%m/%Y"
+
+        return datetime.strptime(raw_date, mask)
+
+    def get_match_on_team_name(team_name : str):               #TODO problem when one team has more than one match on the page
+        pass
+
+    def print_matches(self, data : dict):
+        for i in range(len(data)):
+            print(list(data.keys())[i])
+            for j in list(data.values())[i]:
+                print(f"      {j.text}")
 
 
-
-
+sc = Scraping('urls.txt')
