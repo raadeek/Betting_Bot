@@ -53,6 +53,13 @@ class Scraping:
                 if team_name in j.text:
                     return j
                 
+    def get_matches_from_date(self, date):
+        data = self.matches_dict
+        for i in range(len(data)):
+            if date in list(data.keys())[i]:
+                return [j for j in list(data.values())[i]]    
+        return -1                
+    
     #used in create_bet_event
     @staticmethod
     def get_betted(teamname, home, away):
@@ -89,5 +96,5 @@ class Scraping:
 
 if __name__ == "__main__":
     sc = Scraping('urls.txt')
-    sc.print_matches()
-    sc.create_bet_event("West")
+    #sc.print_matches()
+    print(sc.get_matches_from_date("17"))
