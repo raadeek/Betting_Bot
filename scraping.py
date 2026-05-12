@@ -44,6 +44,31 @@ class Scraping:
         raw_date = date[1] + f'/{YEAR}'
         mask = "%d/%m/%Y"
         return datetime.strptime(raw_date, mask)
+    
+    @staticmethod
+    def get_home_team(match) -> str:
+        if match is None or not match:
+            raise ValueError("get_home_team error.")
+
+        return match[0].find(class_='scoreboard_contestant scoreboard_contestant-1').text
+    
+    
+    @staticmethod
+    def get_away_team(match) -> str:
+        if match is None or not match:
+            raise ValueError("get_away_team error.")
+
+        return match[0].find(class_='scoreboard_contestant scoreboard_contestant-2').text
+    
+    
+    #index = 0; home_odds, index = 1; draw_odds, index = 2; away_odds
+    @staticmethod
+    def get_odds(match, index) -> str: 
+        if match is None or not match:
+            raise ValueError("get_home_odds error.")
+
+        odds = [div.get_text(strip=True) for div in match[0].find_all(class_='btn_label') if div.get_text(strip=True)[0].isdigit()]
+        return odds[index]
 
 
     def get_match_from_team_name(self, team_name : str):               #TODO problem when one team has more than one match on the page
@@ -53,12 +78,14 @@ class Scraping:
                 if team_name in j.text:
                     return j
                 
-    def get_matches_from_date(self, date):
+    def get_matches_from_date(self, date) -> list:
         data = self.matches_dict
         for i in range(len(data)):
             if date in list(data.keys())[i]:
                 return [j for j in list(data.values())[i]]    
-        return -1                
+        return -1      
+
+
     
     #used in create_bet_event
     @staticmethod
@@ -97,4 +124,9 @@ class Scraping:
 if __name__ == "__main__":
     sc = Scraping('urls.txt')
     #sc.print_matches()
-    print(sc.get_matches_from_date("17"))
+    matches = sc.get_matches_from_date("19")
+    print(matches[0].text)
+    print(sc.get_home_team(matches))
+    print(sc.get_away_team(matches))
+    for i in range(3):
+        print(sc.get_odds(matches, i))
