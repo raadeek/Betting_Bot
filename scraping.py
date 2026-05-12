@@ -87,5 +87,7 @@ class Scraping:
 
 
 
-sc = Scraping('urls.txt')
-sc.create_bet_event("West")
+if __name__ == "__main__":
+    sc = Scraping('urls.txt')
+    sc.print_matches()
+    sc.create_bet_event("West")
