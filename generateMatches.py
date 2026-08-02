@@ -1,3 +1,5 @@
+#This code is only for generating fictional matches to test frontend
+
 import match, bet, random, json, datetime
 
 from pathlib import Path
