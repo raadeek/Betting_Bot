@@ -71,7 +71,7 @@ def generateTestMatches(teams_ : list, n : int):
 
 
 def generateJsonFile(filename : str):
-    a = Path(filename)
+    a = Path() / 'backend/' / filename 
 
     if not a.exists():
         print("Filename not exists")
