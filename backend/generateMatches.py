@@ -71,17 +71,17 @@ def generateTestMatches(teams_ : list, n : int):
 
 
 def generateJsonFile(filename : str):
-    a = Path() / 'backend/' / filename 
-
-    if not a.exists():
-        print("Filename not exists")
-        return
+    THIS_FILE = Path(__file__).resolve()
+    BASE_DIR = THIS_FILE.parent.parent
 
     matches = generateTestMatches(TEAMS, 20)
     dicts = [m.get_dict() for m in matches]
 
-    with open(filename, 'w', encoding='utf-8') as f:
+    with open(BASE_DIR / filename, 'w', encoding='utf-8') as f:
         json.dump(dicts, f, indent=4, ensure_ascii=False)
 
 
-generateJsonFile("matches.json")   
+generateJsonFile('matches.json')
+
+
+
