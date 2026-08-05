@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from match import Match
+from backend.match import Match
 
 def get_data(filename : str):
     BASE_DIR = Path(__file__).parent.parent.resolve()
@@ -16,8 +16,8 @@ def get_data(filename : str):
 
     matches = [Match(match['home'], match['away'], match['homeOdds'], match['awayOdds'], match['drawOdds'], match['date']) for match in d]
 
-    print(matches)
+    return matches
 
 
-get_data('matches.json')
+#get_data('matches.json')
 
