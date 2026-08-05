@@ -15,8 +15,8 @@ class Match:
             "home" : self.home,
             "away" : self.away,
             "homeOdds" : self.home_odds,
-            "drawOdds" : self.draw_odds,
             "awayOdds" : self.away_odds,
+            "drawOdds" : self.draw_odds,
             "date" : self.date
         }
         return match_

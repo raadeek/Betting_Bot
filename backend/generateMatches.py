@@ -81,7 +81,7 @@ def generateJsonFile(filename : str):
         json.dump(dicts, f, indent=4, ensure_ascii=False)
 
 
-generateJsonFile('matches.json')
+#generateJsonFile('matches.json')
 
 
 
