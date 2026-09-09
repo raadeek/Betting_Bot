@@ -18,7 +18,7 @@ class BetEvent:
         }
 
     def __str__(self):
-        return f"{self.home_team} - {self.away_team} --> {self.betted_dict.get(self.betted, "Wrong key in self.betted_dict{}")}: {self.odds}"       
+        return f"{self.home_team} - {self.away_team} --> {self.betted_dict.get(self.betted, 'Wrong key in self.betted_dict{}')}: {self.odds}"       
     
 
     
