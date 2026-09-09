@@ -7,19 +7,15 @@
 </head>
 <body>
     <p>Matches</p>
+    
+    <div>
+        <div class="match-buttons-wrapper">
+            
+        </div>
 
-    {% for match in matches %}
-        <tr>
-            <td>{{ match.home }}</td>
-            <td>{{ match.away }}</td>
-            <br>
-        </tr>
-    
-    {% else %}
-    
-        <p>Brak meczy do wyświetlenia.</p>
-    
-    {% endfor %}
-        
+    </div>
+
+    <script src="{{ url_for('static', filename='js/match_buttons.js') }}"></script>
+
 </body>
 </html>

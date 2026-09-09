@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from pathlib import Path
 import sys
 
@@ -12,6 +12,15 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     return render_template('base.html')
+
+
+@app.route('/api/data')
+def get_matches():
+    matches_objects = get_data('matches.json')
+    matches_dicts = [match.get_dict() for match in matches_objects]
+
+    return jsonify(matches_dicts)
+
 
 @app.route('/matches')
 def display_matches():
