@@ -1,6 +1,6 @@
 
 
-async function getMatchesDataFromAPI(){
+async function getMatchesResponseFromAPI(){
     try{
         const response = await fetch("api/data");
         
@@ -8,11 +8,7 @@ async function getMatchesDataFromAPI(){
             throw new Error("Cannot fetch matchData");
         }
 
-        console.log(response);
-
-        const matchData = response.json();
-
-        console.log(matchData);
+        return response;
 
     }
     catch(error){
@@ -20,10 +16,31 @@ async function getMatchesDataFromAPI(){
     }
 }
 
+function getJsonFromResponse(response) {
+    return response.json();
+}
 
-function mainFunc(){
+
+function createMatchButtons(jsonRespone){
+    buttonsWrapper = document.querySelector(".match-buttons-wrapper");
+
+    jsonRespone.forEach(element => {
+        const button = document.createElement('button');
+        button.innerText = `${element.home} - ${element.away}`;
+        buttonsWrapper.appendChild(button);
+
+    });
+}
+
+
+
+async function mainFunc(){
     try{
-        getMatchesDataFromAPI();
+        const response = await getMatchesResponseFromAPI();
+        const jsonResponse = await getJsonFromResponse(response);
+
+        createMatchButtons(jsonResponse);
+
     }
     catch(error){
         console.log(error);
