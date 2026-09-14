@@ -19,7 +19,6 @@ manifes
 
 *.log
 *.sqlite
-*.db
 *.csv
 *.json
 
