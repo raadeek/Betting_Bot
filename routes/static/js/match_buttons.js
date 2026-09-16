@@ -24,12 +24,18 @@ function getJsonFromResponse(response) {
 function createMatchButtons(jsonRespone){
     buttonsWrapper = document.querySelector(".match-buttons-wrapper");
 
-    jsonRespone.forEach(element => {
+    try{
+        jsonRespone.forEach(element => {
         const button = document.createElement('button');
-        button.innerText = `${element.home} - ${element.away}`;
+        button.innerText = `${element.home_team} - ${element.away_team}`;
         buttonsWrapper.appendChild(button);
 
-    });
+        });
+    }
+    catch(error){
+        console.error(error);
+    }
+
 }
 
 

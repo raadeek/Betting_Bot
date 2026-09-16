@@ -6,6 +6,7 @@ project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 
 from backend.loadJson import get_data
+from backend.baza_dane.baza_danych import pobierz_zapisane_mecze
 
 app = Flask(__name__)
 
@@ -16,10 +17,10 @@ def hello():
 
 @app.route('/api/data')
 def get_matches():
-    matches_objects = get_data('matches.json')
-    matches_dicts = [match.get_dict() for match in matches_objects]
+    matches_data = pobierz_zapisane_mecze()
 
-    return jsonify(matches_dicts)
+    return jsonify(matches_data)
+
 
 
 @app.route('/matches')
