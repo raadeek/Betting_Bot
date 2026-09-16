@@ -8,6 +8,13 @@
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+.main-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+
 .match-buttons-wrapper {
   display: flex;
   flex-direction: column;
@@ -69,4 +76,56 @@
 
 .odds-buttons:active {
   transform: scale(0.98);
+}
+
+
+.logging-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  max-width: 600px;
+  margin: 0 auto 16px auto;
+  padding: 0 20px;
+}
+
+.logging-wrapper button {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logging-wrapper button:hover {
+  background-color: #f1f5f9;
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.bet-button {
+  display: block;
+  width: 100%;
+  max-width: 560px; 
+  margin: 24px auto 0 auto;
+  padding: 14px 20px;
+  background-color: #22c55e; 
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.bet-button:hover {
+  background-color: #16a34a;
+}
+
+.bet-button:active {
+  transform: scale(0.99);
 }
