@@ -26,9 +26,34 @@ function createMatchButtons(jsonRespone){
 
     try{
         jsonRespone.forEach(element => {
-        const button = document.createElement('button');
-        button.innerText = `${element.home_team} - ${element.away_team}`;
-        buttonsWrapper.appendChild(button);
+        const matchWrapper = document.createElement('div');
+        matchWrapper.classList.add("match-button-wrapper");
+        buttonsWrapper.appendChild(matchWrapper);
+
+        const teamNamesWrapper = document.createElement('div');
+        teamNamesWrapper.classList.add("team-names-wrapper");
+        teamNamesWrapper.innerText = `${element.home_team} vs ${element.away_team}`;
+        matchWrapper.appendChild(teamNamesWrapper);
+
+        const oddsButtonsWrapper = document.createElement('div');
+        oddsButtonsWrapper.classList.add('odds-buttons-wrap');
+        matchWrapper.appendChild(oddsButtonsWrapper);
+
+        const homeOddsButton = document.createElement('button');
+        homeOddsButton.classList.add('odds-buttons');
+        homeOddsButton.innerText = `${element.home_odds}`;
+        oddsButtonsWrapper.appendChild(homeOddsButton);
+
+        const drawOddsButton = document.createElement('button');
+        drawOddsButton.classList.add('odds-buttons-wrap');
+        drawOddsButton.innerText = `${element.draw_odds}`;
+        oddsButtonsWrapper.appendChild(drawOddsButton);
+
+        const awayOddsButton = document.createElement('button');
+        awayOddsButton.classList.add('odds-buttons-wrap');
+        awayOddsButton.innerText = `${element.away_odds}`;
+        oddsButtonsWrapper.appendChild(awayOddsButton);
+
 
         });
     }
