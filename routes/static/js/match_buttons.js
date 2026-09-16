@@ -45,12 +45,12 @@ function createMatchButtons(jsonRespone){
         oddsButtonsWrapper.appendChild(homeOddsButton);
 
         const drawOddsButton = document.createElement('button');
-        drawOddsButton.classList.add('odds-buttons-wrap');
+        drawOddsButton.classList.add('odds-buttons');
         drawOddsButton.innerText = `${element.draw_odds}`;
         oddsButtonsWrapper.appendChild(drawOddsButton);
 
         const awayOddsButton = document.createElement('button');
-        awayOddsButton.classList.add('odds-buttons-wrap');
+        awayOddsButton.classList.add('odds-buttons');
         awayOddsButton.innerText = `${element.away_odds}`;
         oddsButtonsWrapper.appendChild(awayOddsButton);
 
