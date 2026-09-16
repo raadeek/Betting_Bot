@@ -63,7 +63,18 @@ function createMatchButtons(jsonRespone){
 
 }
 
+function selectOddsButton(selectedButton){
+    const buttonsWrapper = selectedButton.parentElement;
+    const oddsButtons = Array.from(buttonsWrapper.children);
 
+    selectedButton.classList.toggle('selected');
+
+    oddsButtons.forEach((btn) => {
+        if(btn != selectedButton){
+            btn.classList.remove('selected');
+        }
+    });
+}
 
 
 async function mainFunc(){
@@ -72,6 +83,14 @@ async function mainFunc(){
         const jsonResponse = await getJsonFromResponse(response);
 
         createMatchButtons(jsonResponse);
+
+        oddsButtons = document.querySelectorAll(".odds-buttons");
+        
+        oddsButtons.forEach((button) => {
+            button.addEventListener('click', () =>{
+                selectOddsButton(button);
+            });
+        });
 
     }
     catch(error){
