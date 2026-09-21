@@ -1,0 +1,51 @@
+name: Aktualizacja meczow
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+      timezone: "Europe/Warsaw"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-betsim-database
+  cancel-in-progress: false
+
+jobs:
+  update_matches:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Pobranie repozytorium
+        uses: actions/checkout@v7
+
+      - name: Konfiguracja Pythona
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Instalacja bibliotek
+        run: python -m pip install -r requirements.txt
+
+      - name: Pobranie meczow i kursow
+        run: python importuj_mecze.py
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+
+      - name: Zapisanie bazy w repozytorium
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add betsim.db
+
+          if git diff --cached --quiet; then
+            echo "Brak zmian w bazie"
+          else
+            git commit -m "Automatyczna aktualizacja meczow"
+            git push
+          fi
