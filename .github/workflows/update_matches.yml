@@ -18,6 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
+    defaults:
+      run:
+        working-directory: backend/baza_dane
+
     steps:
       - name: Pobranie repozytorium
         uses: actions/checkout@v7
@@ -27,6 +31,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
+          cache-dependency-path: backend/baza_dane/requirements.txt
 
       - name: Instalacja bibliotek
         run: python -m pip install -r requirements.txt
