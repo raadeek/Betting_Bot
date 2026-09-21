@@ -28,6 +28,7 @@ function createMatchButtons(jsonRespone){
         jsonRespone.forEach(element => {
         const matchWrapper = document.createElement('div');
         matchWrapper.classList.add("match-button-wrapper");
+        matchWrapper.id = element.id;
         buttonsWrapper.appendChild(matchWrapper);
 
         const teamNamesWrapper = document.createElement('div');
@@ -42,16 +43,19 @@ function createMatchButtons(jsonRespone){
         const homeOddsButton = document.createElement('button');
         homeOddsButton.classList.add('odds-buttons');
         homeOddsButton.innerText = `${element.home_odds}`;
+        homeOddsButton.dataset.buttonType = "home_odds";
         oddsButtonsWrapper.appendChild(homeOddsButton);
 
         const drawOddsButton = document.createElement('button');
         drawOddsButton.classList.add('odds-buttons');
         drawOddsButton.innerText = `${element.draw_odds}`;
+        drawOddsButton.dataset.buttonType = "draw_odds";
         oddsButtonsWrapper.appendChild(drawOddsButton);
 
         const awayOddsButton = document.createElement('button');
         awayOddsButton.classList.add('odds-buttons');
         awayOddsButton.innerText = `${element.away_odds}`;
+        awayOddsButton.dataset.buttonType = "away_odds";
         oddsButtonsWrapper.appendChild(awayOddsButton);
 
 
@@ -76,6 +80,47 @@ function selectOddsButton(selectedButton){
     });
 }
 
+function createBet(selectedButtons){           //TODO check if user is logged in
+    if(!selectedButtons || selectedButtons.length == 0){
+        console.log("No buttons selected");
+        return;
+    }
+
+    try{
+        let odds = 1;
+        const beteventList = [];
+
+        selectedButtons.forEach((element) =>{
+            odds *= parseFloat(element.innerText);
+            const betEvent = {
+                "eventId" : element.parentElement.parentElement.id,
+                "bettedOn" : element.dataset.buttonType
+            };
+            beteventList.push(betEvent);
+
+        });
+
+        odds = Number(odds.toFixed(2));
+
+        const date = new Date();
+
+
+        let betJson = {
+            "odds" : odds,
+            "username" : "test",
+            "date" : date,
+            "betList" : beteventList
+        };
+
+        return betJson;
+
+    }
+    catch(error){
+        console.error(error);
+    }
+
+}
+
 
 async function mainFunc(){
     try{
@@ -84,12 +129,21 @@ async function mainFunc(){
 
         createMatchButtons(jsonResponse);
 
-        oddsButtons = document.querySelectorAll(".odds-buttons");
+        const oddsButtons = document.querySelectorAll(".odds-buttons");
         
         oddsButtons.forEach((button) => {
             button.addEventListener('click', () =>{
                 selectOddsButton(button);
             });
+        });
+
+        const betButton = document.querySelector(".bet-button");
+
+        betButton.addEventListener('click', () =>{
+            const selectedButtons = document.querySelectorAll(".selected");
+
+            let betJson = createBet(selectedButtons);
+            console.log(betJson); 
         });
 
     }
